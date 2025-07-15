@@ -1,0 +1,65 @@
+﻿@* 
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 40px;
+        }
+        .form-container {
+          margin-bottom: 20px;
+        }
+        .output-box {
+          border: 1px solid #333;
+          padding: 10px;
+          background-color: #f2f2f2;
+          width: 300px;
+
+        }
+    </style>
+
+
+    <div class="form-container">
+        <h3>Enter Your Details</h3>
+        <form id="infoForm">
+            <label>Name:</label><br>
+            <input type="text" id="name"><br><br>
+
+            <label>Email:</label><br>
+            <input type="email" id="email"><br><br>
+
+            <label>Message:</label><br>
+            <textarea id="message"></textarea><br><br>
+
+            <button type="button" onclick="displayInputs()">Submit</button>
+        </form>
+    </div>
+
+    <p class="output-box" id="output"></p>
+    <p class="output-box" id="output2"></p>
+    <script>
+        function displayInputs() {
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const message = document.getElementById("message").value;
+
+          const outputBox = document.getElementById("output");
+          outputBox.innerText = `${name} ${email}`;
+
+        }
+    </script>
+
+ *@
+@model WebApplication2.Models.ContactModel
+
+@using (Html.BeginForm("SubmitContact", "Home", FormMethod.Post))
+{
+    <label>Name:</label>
+    @Html.TextBoxFor(m => m.Name)
+
+    <label>Email:</label>
+    @Html.TextBoxFor(m => m.Email)
+
+    <label>Message:</label>
+    @Html.TextAreaFor(m => m.Message)
+
+    <button type="submit">Send</button>
+}
