@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
+using WebApplication2.Services;
 
 namespace WebApplication2.Controllers
 {
@@ -8,20 +9,25 @@ namespace WebApplication2.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHomeservice homeservice;
+
+        public HomeController(ILogger<HomeController> logger,IHomeservice _service)
         {
             _logger = logger;
+            homeservice = _service;
         }
 
-
         public IActionResult Index()
+
         {
             return View();
         }
+
         public IActionResult testt()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult SubmitContact(ContactModel model)
         {
@@ -29,7 +35,10 @@ namespace WebApplication2.Controllers
             // Example: string userName = model.Name;
 
             // Do something with the data (e.g., save to DB or display)
-            return View("Thankyou", model); // or redirect
+
+            ResponseModel response =  homeservice.GetWelcomeMessages(model); 
+          // Example usage of the service
+            return View("Thankyou", response); // or redirect
         }
 
         public IActionResult Privacy()
